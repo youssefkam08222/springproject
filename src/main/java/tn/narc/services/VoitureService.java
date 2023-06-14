@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import tn.narc.dao.VoitureDaoSpringData;
+import tn.narc.entity.FillUp;
 import tn.narc.entity.Voiture;
 
 @Service
@@ -89,6 +90,26 @@ public class VoitureService {
 			}
 		}
 		return exist;
+	}
+
+	public Voiture addVoitureFillUp(String voitureid, List<FillUp> fillup) {
+		Optional<Voiture> voitureDb = this.voitureDaoSpringData.findById(voitureid);
+		
+		
+		if (voitureDb.isPresent()) {
+			Voiture voitureUpdate = voitureDb.get();
+			if(voitureUpdate.getVoitureFillUps()== null)
+			{
+				voitureUpdate.setVoitureFillUps(fillup);
+				voitureDaoSpringData.save(voitureUpdate);
+				return voitureUpdate;
+			}
+			voitureUpdate.getVoitureFillUps().addAll(fillup);
+			voitureDaoSpringData.save(voitureUpdate);
+			return voitureUpdate;
+		} else {
+			throw new RuntimeException("Enregistrement non trouvé avec l'identifiant : " + voitureid);
+		}
 	}
 
 }

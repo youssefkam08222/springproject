@@ -3,7 +3,6 @@ package tn.narc.entity;
 import java.util.List;
 
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -21,7 +20,7 @@ public class MakeYear {
 	@Field(name = "MAKE_YEAR")
 	private Integer yearMake;
 	
-	@ManyToMany
+
 	@DBRef
 	private List<CarModel> carModels;
 	
